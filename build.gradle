@@ -1,0 +1,34 @@
+//plugins {
+//    id "com.github.johnrengelman.shadow" version "2.0.0"
+//}
+
+description = 'Calculator'
+group 'au.com.rainmore'
+version '0.1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = [group, name, 'Application'].join('.')
+
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+//    from {
+//        configurations.compile.collect {
+//            it.isDirectory() ? it : zipTree(it)
+//        }
+//        configurations.runtime.collect {
+//            it.isDirectory() ? it : zipTree(it)
+//        }
+//    }
+}
