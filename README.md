@@ -112,3 +112,11 @@ Examples
     stack: 11
     (the 6 and 5 were not pushed on to the stack due to the previous error)
     ```
+    
+Build & Run
+-----------
+
+    ```
+    gradle build
+    java -jar build/libs/calculator-0.1.0.jar
+    ```
