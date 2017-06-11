@@ -45,7 +45,7 @@ abstract class Operator<T extends au.com.rainmore.calculator.operators.Operator>
         return getOperator().getClass().getSimpleName().toLowerCase();
     }
 
-    protected String buildErrorMessage(int size) {
-        return String.format("operator * (position: %s): insufficient parameters", size);
+    protected String buildErrorMessage(int position) {
+        return String.format("operator * (position: %s): insufficient parameters", position);
     }
 }
