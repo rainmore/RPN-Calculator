@@ -52,7 +52,13 @@ public class Application {
             if (!result.isEmpty()) {
                 result.forEach(variable -> {
                     println(String.format("\tInput variable `%s`.", variable));
-                    convert(variable).map(expression -> calculator.push(expression));
+                    try {
+                        convert(variable).map(expression -> calculator.push(expression));
+                    }
+                    catch (Exception ex) {
+                        println("\n\t" + ex.getMessage());
+                    }
+
                 });
 
                 println(String.format("\n\tCalculator stack: %s\n", calculator.toString()));

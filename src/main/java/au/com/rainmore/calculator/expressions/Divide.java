@@ -10,15 +10,10 @@ public class Divide extends Operator<au.com.rainmore.calculator.operators.Divide
     }
 
     @Override
-    protected BigDecimal calculate(final Stack<Expression> variables) {
-        Number right = (Number) variables.pop();
-        if (right.getValue().equals(BigDecimal.ZERO)) {
-            variables.push(right);
-            System.out.println(buildErrorMessage(variables.size()));
-            return null;
+    protected BigDecimal calculate() {
+        if (getRight().equals(BigDecimal.ZERO)) {
+            throw new IllegalArgumentException("Divided By Zero");
         }
-        Number left = (Number) variables.pop();
-
-        return getOperator().operate(left.getValue(), right.getValue());
+        return super.calculate();
     }
 }

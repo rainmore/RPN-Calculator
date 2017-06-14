@@ -14,10 +14,4 @@ public class Sqrt extends Operator<au.com.rainmore.calculator.operators.Sqrt> {
         return 1;
     }
 
-    @Override
-    protected BigDecimal calculate(final Stack<Expression> variables) {
-        Number left = (Number) variables.pop();
-
-        return getOperator().operate(left.getValue(), null);
-    }
 }

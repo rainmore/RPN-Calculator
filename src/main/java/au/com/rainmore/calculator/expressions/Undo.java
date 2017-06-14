@@ -1,16 +1,26 @@
 package au.com.rainmore.calculator.expressions;
 
-import java.math.BigDecimal;
 import java.util.Stack;
 
-public class Undo implements Expression {
+public class Undo extends Expression {
 
     @Override
-    public BigDecimal interpret(final Stack<Expression> variables) {
+    public void interpret(final Stack<Expression> variables) {
         if (!variables.empty()) {
-            variables.pop();
-        }
+            if (variables.peek() instanceof Number) {
+               variables.pop();
+            }
+            else if (variables.peek() instanceof Operator) {
+                Operator operator = (Operator) variables.pop();
+                if (operator.getLeft() != null) {
+                    variables.push(operator.getLeft());
+                }
 
-        return null;
+                if (operator.getRight() != null) {
+                    variables.push(operator.getRight());
+                }
+            }
+
+        }
     }
 }

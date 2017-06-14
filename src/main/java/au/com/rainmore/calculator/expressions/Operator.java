@@ -3,9 +3,12 @@ package au.com.rainmore.calculator.expressions;
 import java.math.BigDecimal;
 import java.util.Stack;
 
-abstract class Operator<T extends au.com.rainmore.calculator.operators.Operator> implements Expression {
+abstract public class Operator<T extends au.com.rainmore.calculator.operators.Operator> extends Expression {
 
     final private T operator;
+
+    private Expression left;
+    private Expression right;
 
     protected Operator(T operator) {
         this.operator = operator;
@@ -20,32 +23,36 @@ abstract class Operator<T extends au.com.rainmore.calculator.operators.Operator>
     }
 
     @Override
-    public BigDecimal interpret(final Stack<Expression> variables) {
-        int size = variables.size();
-        if (size < getParameterSize()) {
-            System.out.println(buildErrorMessage(size));
-            return null;
+    public void interpret(final Stack<Expression> variables) throws RuntimeException {
+        try {
+            int size = variables.size();
+            if (size < getParameterSize()) {
+                throw new IllegalArgumentException(String.format("operator * (position: %s): insufficient parameters", size));
+            }
+
+            if (getParameterSize() > 1) {
+                right = variables.pop();
+            }
+
+            left = variables.pop();
+
+            setResult(calculate());
+            variables.add(this);
         }
-
-        BigDecimal result = calculate(variables);
-        variables.add(new Number(result));
-
-        return result;
+        catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 
-    protected BigDecimal calculate(final Stack<Expression> variables) {
-        Number right = (Number) variables.pop();
-        Number left = (Number) variables.pop();
-
-        return getOperator().operate(left.getValue(), right.getValue());
+    public Expression getLeft() {
+        return left;
     }
 
-    @Override
-    public String toString() {
-        return getOperator().getClass().getSimpleName().toLowerCase();
+    public Expression getRight() {
+        return right;
     }
 
-    protected String buildErrorMessage(int position) {
-        return String.format("operator * (position: %s): insufficient parameters", position);
+    protected BigDecimal calculate() {
+        return getOperator().operate(left.getResult(), right != null ? right.getResult() : null);
     }
 }
