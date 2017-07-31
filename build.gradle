@@ -1,6 +1,3 @@
-//plugins {
-//    id "com.github.johnrengelman.shadow" version "2.0.0"
-//}
 
 description = 'Calculator'
 group 'au.com.rainmore'
@@ -17,18 +14,13 @@ apply plugin: 'application'
 
 mainClassName = [group, name, 'Application'].join('.')
 
-
+dependencies {
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
 
 jar {
     manifest {
         attributes 'Main-Class': mainClassName
     }
-//    from {
-//        configurations.compile.collect {
-//            it.isDirectory() ? it : zipTree(it)
-//        }
-//        configurations.runtime.collect {
-//            it.isDirectory() ? it : zipTree(it)
-//        }
-//    }
 }
